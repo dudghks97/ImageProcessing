@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "[3주차]DIP04_ImageVideoIO_Processing/Labs_3주차"
+		},
+		{
+			"path": "[4주차]ImageVideoIO_Processing_OpenCV_part2"
+		},
+		{
+			"path": "[5주차]SpatialFiltering_GaussianBlurring\\Labs_5주차"
+		},
+		{
+			"path": "[6주차]DIP06_EdgeDetection_Labs"
+		},
+		{
+			"path": "[7주차]DIP07_ImageEnhancement/Labs_7주차"
+		}
+	],
+	"settings": {}
+}

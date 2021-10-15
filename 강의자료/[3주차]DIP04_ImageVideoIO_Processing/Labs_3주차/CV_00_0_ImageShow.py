@@ -20,6 +20,9 @@
 """
 
 import cv2 as cv
+import os
+
+print('path : ' + os.path.abspath('.'))
 
 # 현재의 위치에서 상위 폴더의 data 폴더에는 이번 시간 다룰 샘플 영상과 비디오 동영상을 저장하였다.
 a = cv.imread('../data/monarch.bmp')           # 영상 파일이 현재의 폴더에 있어야 한다.

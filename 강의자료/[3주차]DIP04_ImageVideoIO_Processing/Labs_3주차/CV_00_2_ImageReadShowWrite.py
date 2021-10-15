@@ -74,12 +74,15 @@ cv.imwrite(file_mono, imgM)               # 2차원 영상을 저장한다.
 
 # 저장한 파일을 다시 읽어낸다.
 img = cv.imread(file_mono)   # -1 : as is
+img = cv.imread(file_mono, 0)
 cv.imshow(f"3) 'img' from '{file_mono}': img.shape={img.shape}", img)
 
 # 구조체의 정보를 화면에 출력하여 비교한다.
 print(f"\n3) array.shape check before writing into file: imgM.shape={imgM.shape}")
 print(f"3) array.shape check after reading from file: img.shape={img.shape}")       # 모노 영상인데 왜 3차원일까?
 print("왜 읽어내니까 3채널 영상이 되었나요? 쓰기 전과 같은 채널로 읽어 내려면?")
+# 읽기모드는 따로 지정하지 않으면 3채널이 되기 때문이며, 쓰기 전과 같은 채널로 읽으려면
+# img = cv.imread(filemono, 0) 와 같이 코드를 작성하면 된다.
 cv.waitKey(0)       # 이곳에서 키보드 입력을 기다린다.
 
 
