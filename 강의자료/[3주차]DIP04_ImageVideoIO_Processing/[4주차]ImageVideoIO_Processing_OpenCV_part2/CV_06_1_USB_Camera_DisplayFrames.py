@@ -40,7 +40,7 @@ def onMouse(event, x, y, flags, param):
 
 cameraCapture = cv.VideoCapture(0, cv.CAP_DSHOW)         # 0은 비디오 입력 장치의 번호이므로 바뀔 수도 있음.
 cv.namedWindow('MyWindow')         # 미리 출력할 창을 생성해 둔다.
-
+# cv.CAP_DSHOW : Direct Show 를 뜻함.
 
 # ========================================================================================================
 # 단계 2: 마우스 버튼을 동작을 모니터링 하기 위해 마우스 콜백 함수를 설치한다.

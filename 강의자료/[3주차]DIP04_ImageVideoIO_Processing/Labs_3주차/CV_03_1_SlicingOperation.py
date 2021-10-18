@@ -97,7 +97,7 @@ cv.imshow('step 3b. right half inverted + left half inverted(G channel)', image2
 cv.imshow('step 3c. original image', image)          # 질문: 원본이 손상된 이유를 설명하시오.
 if image is image2:     # 두 객체가 같은 객체인지 확인한다.
     print("# 질문: step 3c 원본이 손상된 이유를 설명하시오.")
-
+    # 정답 : 4. copy() 함수 사용 -> image 복사 시 원본 손상을 방지함 1번처럼하면 손상됨
 cv.waitKey(0)
 cv.destroyAllWindows()
 

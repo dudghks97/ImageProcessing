@@ -58,7 +58,7 @@ import time
 # 장치 설정에 따라 카메라 번호를 바꾸어야할 때도 있다.
 # ========================================================================================================
 #cameraCapture = cv.VideoCapture(0)
-cameraCapture = cv.VideoCapture(0, cv.CAP_DSHOW)   # backend를 DirectShow backend로 변경하면 경고 오류가 없어진다.
+cameraCapture = cv.VideoCapture(1, cv.CAP_DSHOW)   # backend를 DirectShow backend로 변경하면 경고 오류가 없어진다.
 
 
 # ========================================================================================================
@@ -126,7 +126,7 @@ print(f'fps_actual for writing video file= {fps_actual}')
 videoWriter = cv.VideoWriter(
 #    'CamVid.avi', cv.VideoWriter_fourcc('I','4','2','0'), fps_actual, size)
     f"CamVid({size}, fps={str_sc}).avi", cv.VideoWriter_fourcc('F', 'M', 'P', '4'), fps_actual, size)
-
+print(f"File name is : CamVid({size}, fps={str_sc}).avi")
 
 # ========================================================================================================
 # 단계 5: 메인 루틴 - 카메라에서 읽어서 비디오 파일에 저장한다.

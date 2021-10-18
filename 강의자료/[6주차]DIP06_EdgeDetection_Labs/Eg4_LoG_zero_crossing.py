@@ -12,7 +12,7 @@ Zero Crossing을 찾는 조건으로 무조건 +, - 교차점만을 찾는 것�
 
 """
 
-Path = '../data/'               # 현재 상위 폴더의 상위 폴더 아래에 있는 Images 폴더.
+Path = './data/'               # 현재 상위 폴더의 상위 폴더 아래에 있는 Images 폴더.
 #Path = 'd:/work/@@DIP/LectureMaterials/Images/'
 #Name = 'monarch.jpg'
 #Name = 'graphicShapes.png'

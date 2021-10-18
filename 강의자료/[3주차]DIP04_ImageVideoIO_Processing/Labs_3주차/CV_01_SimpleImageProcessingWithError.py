@@ -85,16 +85,22 @@ cv.destroyWindow('2a. reverse_image, imageRv')
 # OpenCV의 imshow() 함수는 데이터 형에 따라 가정하고 있는 범위가 다르다;   uint8 = [0, 255], float=[0, 1]
 image1 = image.copy() * 1.5
 image2 = image.copy() / 1.5
+
 cv.imshow('2b. Brighter', image1)
 cv.imshow('2c. Darker', image2)
 print('2.2) imag1.dtype=', image1.dtype, ', imag2.dtype=', image2.dtype)
 # 2) imag1.dtype= float64 , imag2.dtype= float64
+
+print(f'image.max = {np.max(image)}, image.min = {np.min(image)}', image.dtype)         # uint8
+print(f'image1.max = {np.max(image1)}, image1.min = {np.min(image1)}', image1.dtype)    # float64
+print(f'image2.max = {np.max(image2)}, image2.min = {np.min(image2)}', image2.dtype)    # float64
 
 # 왜 오류가 발생할까요 ? 힌트 - 영상 데이터 어레이의 데이터 형(dtype) 관찰.
 # 단계 5에서는 threshold() 함수로 해결합니다.
 print('Error!! Why the blank screens?')
 cv.waitKey(0)
 
+# 위의 오류는 다음과 같이 해결이 가능함
 image1 = (np.clip(255*(image/255 * 1.5), 0, 255)).astype('uint8')
 image2 = np.clip(255*(image/255 / 1.5), 0, 255).astype('uint8')
 cv.imshow('2b. Brighter', image1)

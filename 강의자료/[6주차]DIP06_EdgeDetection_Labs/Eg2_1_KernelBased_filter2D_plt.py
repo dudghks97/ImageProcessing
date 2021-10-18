@@ -51,7 +51,7 @@ from matplotlib import pyplot as plt
 # 다음 사례를 활용하여 영상 파일이 있는 폴더를 적절히 지정하시오.
 # ----------------------------------------------------------------------------------------------------------------------
 #Path = 'd:\Work\StudyImages\Images\\'       # \\ 오류 발생 방지. \만 쓰면 오류.
-Path = '../data/'               # 현재 상위 폴더의 상위 폴더 아래에 있는 Images 폴더.
+Path = './data/'               # 현재 상위 폴더의 상위 폴더 아래에 있는 Images 폴더.
 #Path = 'd:/work/@@DIP/LectureMaterials/Images/'
 #Name = 'monarch.bmp'
 #Name = 'graphicShapes.png'

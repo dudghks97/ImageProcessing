@@ -47,12 +47,14 @@ capture = cv.VideoCapture(FullName)
 # Check if camera opened successfully:
 if capture.isOpened() is False:
     print(f"Error opening video stream or file: {Name}")
+    exit(0)
 
 fps = capture.get(cv.CAP_PROP_FPS)
 print ('1. fps of input file:' + Name + ' =', fps)
 dly_ms = 1000/(fps)       # ms로 표시한 프레임간의 간격[ms]
 print('2. regular delay time between frames =', int(dly_ms))
 
+# 영상 파일의 맨 뒤부터 읽어옴
 # We get the index of the last frame of the video file:
 frame_index = capture.get(cv.CAP_PROP_FRAME_COUNT) - 1
 print(f"3. starting frame number = {int(frame_index)}")
@@ -64,7 +66,7 @@ rate = 2        # 재생 시간이 rate 배로 저속 지생된다.
 #rate = 1/2        # 재생 시간이 1/2 배로 저속 지생된다. => 2배 고속 재생된다.
 print(f"5. rate = {rate:#.2f}, play time multiplication rate = {rate}")
 dly_between_frames = rate*1000 / fps
-#dly_between_frames = 50
+# dly_between_frames = 50
 print(f'6. delay time between frames = {dly_between_frames:#.2f}[ms]')
 
 # 프레임간의 시간지연 시간 조정. +이면 증가. -이면 감소. [ms] 단위,.
@@ -87,8 +89,8 @@ while capture.isOpened() and frame_index >= 0:
         # print("CAP_PROP_POS_MSEC : '{}'".format(capture.get(cv.CAP_PROP_POS_MSEC)))
         cv.imshow('Original frame', frame)                  # Display the resulting frame
         gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)  # Convert the frame to grayscale
-        cv.imshow('Grayscale frame', gray_frame)            # Display the grayscale frame
-        frame_index = frame_index - 1                       # Decrement the index to read next frame
+        cv.imshow('Grayscale frame', gray_frame)            # Grayscale로 출력
+        frame_index = frame_index - 1                       # 프레임 감소 => 역재생
         print(f"\r  next index to read: {frame_index}", end='  ')
         if cv.waitKey(1) == ord('q'):      # Press q on keyboard to exit the program
             break        # Break the loop
@@ -123,4 +125,3 @@ cv.destroyAllWindows()
 #       프레임과 프레임 간격 안에 필요한 처리을 못한다면 이 방법은 사용이 불가하겠죠.
 #   (b) threading을 이용한 방안도 있을 것으로 보임. 강의 내용에 포함도지 않았음으로 자율적인 학습이 필요함.
 #       '파이썬 스레드 프로그래밍' 등의 키워드로 검색하여 예제 프로그램을 활용하면 될 것으로 보임.
-

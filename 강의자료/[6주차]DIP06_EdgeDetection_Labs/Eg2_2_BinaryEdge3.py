@@ -39,7 +39,7 @@ from matplotlib import pyplot as plt
 # 다음 사례를 활용하여 영상 파일이 있는 폴더를 적절히 지정하시오.
 #Path = 'd:\Work\StudyImages\Images\\'       # \\ 오류 발생 방지. \만 쓰면 오류.
 #Path = 'd:\Work\StudyImages\Images\\'       # \\ 오류 발생 방지. \만 쓰면 오류.
-Path = '../data/'
+Path = './data/'
 #Path = 'd:/work/@@DIP/LectureMaterials/Images/'
 #Name = 'graphicShapes.png'
 #Name = 'circles_rects.png'
@@ -94,6 +94,7 @@ SobelVertical = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]] 	    # 수직방향의 1차
 #FriVertical = [1 sqrt(2) 1; 0 0 0; -1 -sqrt(2) -1] ;      # 수직방향의 1차 미분
 
 
+# 수직 커널, 수평 커널
 kerH = np.array(SobelHorizontal, dtype=float )     # print(type(kerH))
 kerV = np.array(SobelVertical, dtype=float )       # print(type(kerV))
 

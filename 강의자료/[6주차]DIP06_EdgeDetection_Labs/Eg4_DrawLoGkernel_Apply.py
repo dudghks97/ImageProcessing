@@ -185,7 +185,7 @@ plt.show()
 # ---------------------------------------------------------------------------------
 
 #FullName = 'd:/work/@@DIP/LectureMaterials/Images/' + 'lenna.bmp'
-FullName = '../data/' + 'lenna.tif'
+FullName = './data/' + 'lenna.tif'
 
 img = cv.imread(FullName, 0)/255.0
 
