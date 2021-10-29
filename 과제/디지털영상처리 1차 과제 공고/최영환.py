@@ -23,8 +23,8 @@ def onChange(x):
 
 
 # 영상 로드
-fname = Path + Name             # 원본 파일의 전체 경로
-img = cv.imread(fname)          # 원본 파일
+FullName = Path + Name             # 원본 파일의 전체 경로
+img = cv.imread(FullName)          # 원본 파일
 
 imgC = img.copy()               # 원본영상
 out = img.copy()                # 변환영상

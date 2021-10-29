@@ -63,7 +63,7 @@ blur=cv.GaussianBlur(src=img, ksize=(21,21),
 #------------------------------------------------------------------------------------
 # 단계 2 : 영상의 고주파 성분(UnsharpMaskImg)을 구하여 화면에 출력한다.
 #------------------------------------------------------------------------------------
-UnsharpMaskImg = img - blur # 고주파 영상
+UnsharpMaskImg = img - blur     # 고주파 영상
 
 # -를 포함하는 성분을 임의 숫자 0.5를 더해서 +로 환원해서 출력한다.
 cv.imshow('High Frequency Image + 0.5', UnsharpMaskImg + 0.5 )
