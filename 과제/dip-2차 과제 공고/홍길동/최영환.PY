@@ -53,51 +53,61 @@ while success:          # 영상의 끝까지 재생
     weight = cv.getTrackbarPos('HE wgt', Name)
 
     pos += 1
-    cv.setTrackbarPos('position', Name, pos)        # 현재 트랙바의 위치 설정
-    cap.set(cv.CAP_PROP_POS_FRAMES, pos)    # 현재 프레임 = 현재 트랙바의 위치
-    success, frame = cap.read()             # 다음 프레임을 읽어온다
+    cv.setTrackbarPos('position', Name, pos)    # 현재 트랙바의 위치 설정
+    cap.set(cv.CAP_PROP_POS_FRAMES, pos)        # 현재 프레임 = 현재 트랙바의 위치
+    success, frame = cap.read()                 # 다음 프레임을 읽어온다
 
-    # 히스토그램 평활화(HE) 실행 : 가중치 값 설정이 필요함
+    # 히스토그램 평활화(HE) 실행 : 가중치 값 설정은 했으나 맞는지는 모르겟음
     if frame is not None:
         frameC = frame.copy()                               # 프레임 복사
-        frameG = cv.cvtColor(frameC, cv.COLOR_RGB2GRAY)     # 그레이로 변환
+        frameG = cv.cvtColor(frameC, cv.COLOR_BGR2GRAY)     # 그레이로 변환
 
-        w_array = np.ones_like(frameG)
         # 히스토그램(분산함수, DF) 를 구함
         hist, bins = np.histogram(a=frameG, bins=256, range=[0, 255])
-        hist2, bin2 = np.histogram(a=frameG, bins=256, weights=w_array, range=[0, 255])
-        # 정규화 누적분포 함수
-        cdf = hist.cumsum()
-        cdf2 = hist2.cumsum()
+        cdf = hist.cumsum()     # 누적분포함수
 
-        # 매핑 후 LUT 생성
+        # 매핑 후 LUT(Look Up Table) 생성
         mapping = cdf * 255 / cdf[255]
         LUT = mapping.astype('uint8')
-        # 가중치 테스트
-        mapping2 = cdf2 * 255 / cdf2[255]
-        LUT2 = mapping2.astype('uint8')
-        temp = LUT2[frameC]
 
         # LUT 기반 HE 시행, 컬러
         frameCeq = LUT[frameC]
-        # 영상에 글자 삽입
+
+        # 원본영상 반영비율 조절(가중 평균 미적용) => HE 만 적용한 결과와의 차이 : 밝아짐
+        #frameCeq = np.clip((255*(weight * 0.01 * frameCeq/255)) + frameC, 0, 255).astype('uint8')
+
+        # 원본영상 반영비율 조절(가중 평균 미적용) => HE 만 적용한 결과와의 차이 : 없어짐
+        w = weight * 0.01
+        frameCeq = np.clip((255 * (w * frameCeq/255)) + (255 * ((1-w) * frameC/255)), 0, 255).astype('uint8')
+
+        # 원본영상 반영 비율 조절(가중 평균 값 적용)
+        #w = 0.01 * weight
+        #weighted_avg = (np.sum(w * frameCeq)) / (w * 255)   # 가중평균 값
+        #frameCeq = np.clip((255 * (weighted_avg * frameCeq / 255)), 0, 255).astype('uint8')
+
+        # 원본 영상에 텍스트 추가
         org = (0, 30)
         cv.putText(frameC, f"org_index = {pos}", org, 0, 0.8, (0, 0, 255), 2)
-        cv.putText(frameCeq, f"this_index = {count}", org, 0, 0.8, (0, 0, 255), 2)
-        cv.putText(frameCeq, f"sigma={sigma}, scale={scale}, weight={weight}", (0, 180), 0, 0.8, (0, 0, 255), 2)
-        res = cv.hconcat([frameC, frameCeq])    # 출력될 결과 영상
 
-        # 언샤프 마스킹(UM) 시행 : 이상함
-        if (scale != 0) or (sigma != 0):
+        # 언샤프 마스킹(UM) 미적용. 히스토그램 평활화(HE)만 적용
+        if (scale == 0) or (sigma == 0):
+            # 평활화 영상에 텍스트 추가
+            cv.putText(frameCeq, f"this_index = {count}", org, 0, 0.8, (0, 0, 255), 2)
+            cv.putText(frameCeq, f"sigma={sigma}, scale={scale}, weight={weight}", (0, 180), 0, 0.8, (0, 0, 255), 2)
+            res = cv.hconcat([frameC, frameCeq])  # 출력될 결과 영상
+        # 언샤프 마스킹(UM) 적용.
+        else:
+            frameCeq = frameCeq / 255
             k = sigma * 6 + 1
             blur = cv.GaussianBlur(src=frameCeq, ksize=(k, k), sigmaX=sigma)
-            UMFrame = frameCeq + scale * (frameCeq - blur)
-            cv.putText(UMFrame, f"this_index = {count}", org, 0, 1, (0, 0, 255), 2)
-            cv.putText(frameCeq, f"sigma={sigma}, scale={scale}, weight={weight}", (0, 180), 0, 0.8, (0, 0, 255), 2)
-            res = cv.hconcat([frameC, UMFrame])                 # 출력될 결과 영상
+            um = frameCeq + scale * (frameCeq - blur)
+            um = np.clip(um * 255, 0, 255).astype(frameC.dtype)
+            # 마스킹 영상에 텍스트 추가
+            cv.putText(um, f"this_index = {count}", org, 0, 0.8, (0, 0, 255), 2)
+            cv.putText(um, f"sigma={sigma}, scale={scale}, weight={weight}", (0, 180), 0, 0.8, (0, 0, 255), 2)
+            res = cv.hconcat([frameC, um])                 # 출력될 결과 영상
 
-        # 결과 영상출력
-        cv.imshow(Name, res)
+        cv.imshow(Name, res)                    # 영상 출력
 
         # 키 입력 대기
         key = cv.waitKey(1)
@@ -108,10 +118,12 @@ while success:          # 영상의 끝까지 재생
             saveName = f'tmp_{int(pos):02d}_matrix.png'
             cv.imwrite(Path + saveName, res)
             if frameCeq is not None:
+                print(f"\nFile name is {saveName}")
                 print('\nImage write success!')
             else:
                 print('\nError Occured!')
         elif key == 32:     # 스페이스바 입력 시 정지
+            print(f'\nPause!')
             cv.waitKey(0)
 
     print(f"\rCurrent frame number = {pos} \t playing count = {count}", end=' ')
@@ -124,6 +136,5 @@ playing_sec = number_of_total_frames/fps    # 실제 재생시간
 print(f'\n\nExpected play time={playing_sec:#.2f}[sec]')
 print(f'Real play time={e_time:#.2f}[sec]')
 
-cap.release()      # 객체 반환
-cv.destroyAllWindows()
-
+cap.release()               # 객체 반환
+cv.destroyAllWindows()      # 모든 창 종료
