@@ -73,17 +73,27 @@ while success:          # 영상의 끝까지 재생
         # LUT 기반 HE 시행, 컬러
         frameCeq = LUT[frameC]
 
-        # 원본영상 반영비율 조절(가중 평균 미적용) => HE 만 적용한 결과와의 차이 : 밝아짐
-        #frameCeq = np.clip((255*(weight * 0.01 * frameCeq/255)) + frameC, 0, 255).astype('uint8')
+        # 원본영상 반영비율 조절(가중 평균 미적용) => 가중치 값 100 기준 : HE 만 적용한 결과와의 차이 : 밝아짐
+        # frameCeq = np.clip((255*(weight * 0.01 * frameCeq/255)) + frameC, 0, 255).astype('uint8')
 
-        # 원본영상 반영비율 조절(가중 평균 미적용) => HE 만 적용한 결과와의 차이 : 없어짐
+        # 원본영상 반영비율 조절(가중 평균 미적용) => 가중치 값 100 기준 : HE 만 적용한 결과와의 차이 없어짐
         w = weight * 0.01
         frameCeq = np.clip((255 * (w * frameCeq/255)) + (255 * ((1-w) * frameC/255)), 0, 255).astype('uint8')
 
-        # 원본영상 반영 비율 조절(가중 평균 값 적용)
-        #w = 0.01 * weight
-        #weighted_avg = (np.sum(w * frameCeq)) / (w * 255)   # 가중평균 값
-        #frameCeq = np.clip((255 * (weighted_avg * frameCeq / 255)), 0, 255).astype('uint8')
+        """원본영상 반영 비율 조절(가중 평균 값 적용) 가중 평균 자체가 불가능한 것으로 관측 - 11.04"""
+        """영상에 대한 가중 평균 : 잡음제거에 사용됨"""
+        # frameCeq = frameCeq/255
+        # frameC = frameC/255
+        # w = 0.01 * weight
+        # k = frameCeq.shape[0] * frameCeq.shape[1] * frameCeq.shape[2]
+        # weighted_avg = (np.sum(w * frameC)) / (w * k)   # 가중평균 값
+        # print(frameCeq[0][0])
+        # print(frameCeq.shape)
+        # print('\r분자', (np.sum(w * frameC)), '분모', (w * k))
+        # print(weighted_avg)
+        # cv.waitKey(0)
+        # frameC = np.clip((255 * frameC), 0, 255).astype('uint8')
+        # frameCeq = np.clip((255 * (weighted_avg * frameCeq)), 0, 255).astype('uint8')
 
         # 원본 영상에 텍스트 추가
         org = (0, 30)
