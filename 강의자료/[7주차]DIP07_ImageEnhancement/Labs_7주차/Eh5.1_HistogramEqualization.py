@@ -173,6 +173,7 @@ plt.legend(('cdf','histogram'), loc = 'upper left', fontsize=15)
 
 # 단계 3: (223) 히스토그램 평활화 수행하여 결과 보이기 ---------------------------------------------------------------
 cdf = cdf * 255 / cdf[255]
+print(cdf)
 LUT = cdf.astype('uint8')       # Look Up Table - 256바이트 크기. 화소 값 변환 테이블.
 #print(LUT)
 

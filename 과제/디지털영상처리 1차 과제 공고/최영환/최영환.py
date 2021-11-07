@@ -3,7 +3,7 @@ import cv2 as cv
 import numpy as np
 
 # 변수 선언
-Path = './'
+Path = '../'
 Name = 'dark1.png'
 
 
