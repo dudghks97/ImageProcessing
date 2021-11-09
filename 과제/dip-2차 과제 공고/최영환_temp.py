@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 # 변수 선언
-Path = '../'
+Path = './'
 Name = 'matrix.mp4'
 #Name = 'polor_express.avi'
 #Name = 'the_return_of_the_king.avi'
