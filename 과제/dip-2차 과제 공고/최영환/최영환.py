@@ -4,9 +4,9 @@ import numpy as np
 import time
 
 # 변수 선언
-#Path = 'd:/dip/'
-Path = '../'
+Path = 'd:/dip/'
 Name = 'matrix.mp4'
+
 
 # 트랙바의 콜백 함수
 def onChange(x):
