@@ -4,6 +4,8 @@
 
 2. 프로그램의 목표
     Hue는 고정하고 S, V를 변화시킨 후 역 변환하여 S, V의 변화가 어떤 결과를 낳는지 고찰한다.
+    채도(Saturation, S)
+    명도(Value, V)
 
 3. 프로그램에서 점검 포인트
     실습 1, 2 : uint8 FULL, float32 - 2가지 데이터 타입으로 이루어진 HSV 좌표계의 S값의 변화영향을 고찰한다.
@@ -125,9 +127,10 @@ for scale in scale_list:
     plt.xticks([]), plt.yticks([])
     i +=1
 plt.show()
-exit()
-#=============================================================================================
+# exit()
 """
+#=============================================================================================
+
 
 
 """
@@ -177,7 +180,7 @@ for scale in scale_list:
     plt.xticks([]), plt.yticks([])
     i += 1
 plt.show()
-exit()
+# exit()
 """
 
 
@@ -240,3 +243,4 @@ for i, (Sscale, Vscale) in enumerate(scale_list, start=1) :
 
 plt.show()
 
+exit()

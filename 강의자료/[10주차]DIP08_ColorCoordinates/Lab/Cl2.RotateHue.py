@@ -21,6 +21,8 @@ dst	=cv.cvtColor(src, code[, dstCn])
             if the parameter is 0, the number of the channels is derived automatically 
             from src and code.
 
+# HSV : 색조 명도 채도
+
 0. 실습의 내용
     실습 1a: uint8 정수 버전- HSV중 H는 0~179의 범위에 있다.
     실습 1b: uint8 정수 버전- HSV중 H는 0~255의 범위에 있다. 이른바 FULL
@@ -46,12 +48,17 @@ dst	=cv.cvtColor(src, code[, dstCn])
 5. 질문
     1) 영상 데이터가 0~1의 부동소수로 구성되어 있다. Hue를 반시계 방향으로 30도 회전하려 위해 HSV 데이터 중
        H에 변화를 어떻게 주어야 하는지 설명하시오.
+       Hue shift: +330 이 되어야함 -> shift value 를 구한 뒤, 연산해주면됨
+
     2) uint8 영상 데이터를 COLOR_BGR2HSV로 HSV 좌표계로 변환하였다.
        Hue를 120도 시계 방향으로 회전하고자 한다.
        HSV 좌표계의 어떤 채널을 어떤 방식으로 가공해야 할지 설명하시오.
+
+
     3) uint8 영상 데이터를 COLOR_BGR2HSV_FULL로 HSV 좌표계로 변환하였다.
        Hue를 120도 시계 방향으로 회전하고자 한다.
        HSV 좌표계의 어떤 채널을 어떤 방식으로 가공해야 할지 설명하시오.
+    2), 3)은 아래 나온 주석 처리대로 하면 될 것 같은데
 
 
 6. 실험 결과의 정리 : cvtColor()을 이용한 RGB ↔ HSV 변환에 대하여
@@ -109,7 +116,7 @@ img = cv.imread(FullName)
 assert img is not None, 'No image file....!'  # 입력 영상을 제대로 읽어오지 못하여 NULL을 반환.
 
 
-"""
+
 # 실습 1a ======================================================================================
 # uint8 정수 버전- HSV중 H는 0~179의 범위에 있다.
 
@@ -152,7 +159,11 @@ for hue_shift in range(0, 360, 60):     # 0~360까지 60도씩 증가
     plt.title('Hue Shift: +'+str(hue_shift)+", value="+str(shift_value))
     plt.xticks([]), plt.yticks([])
     i +=1
-"""
+
+# 관측 결과
+# 결국 180은 color wheel 기준으로 정반대의 것이고, 역방향 진행을 원하면 180 이상으로 가면되는데,
+# 역방향 60 은 Hue Shift 가 300 일 경우임
+# 역방향 x 를 원할 경우 Hue Shift 360 - x 만큼 하면 얻어짐
 
 
 # 실습 1b ======================================================================================

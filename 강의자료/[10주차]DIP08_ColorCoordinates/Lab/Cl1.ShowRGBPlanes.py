@@ -67,8 +67,8 @@ assert img is not None, 'No image file....!'  # 입력 영상을 제대로 읽�
 # 가장 손쉬운 방법
 # print("RGB 3개 영상(imgR, imgG, imgB)을 미리 정의하여 두고 화면에 출력한다.")
 
-b, g, r = cv.split(img);
-img = cv.merge([r, g, b]);    # 영상을 RGB 순으로 배열한다.
+b, g, r = cv.split(img)
+img = cv.merge([r, g, b])    # 영상을 RGB 순으로 배열한다.
 imgBlank = np.zeros(img.shape, dtype='uint8')   # 원영상과 같은 크기의 빈 영상을 준비한다.
 
 # 해당 되는 채널의 화면 정보를 화면 출력을 위한 어레이에 복사한다.
@@ -97,7 +97,7 @@ plt.show()
 
 
 
-"""
+
 # 방법 2 ======================================================================================
 # print("방법 1과는 달리 RGB 3개 평면 어레이(imgR, imgG, imgB)를 만들지 않는다.")
 
@@ -124,9 +124,8 @@ for color in ['Red', 'Green', 'Blue']:
     ii += 1
 
 plt.show()
-exit(0)
 #=============================================================================================
-"""
+
 
 
 
@@ -141,14 +140,14 @@ plt.figure(num='Original Image & their color planes')
 #plt.subplot(221); plt.imshow(img)      # 오류! BGR 영상이라 올바로 출력되지 않는다.
 
 # ['Color Title', channel_num_RGB, channel_num_BGR]
-for color, i, ii in [['Red', 0, 2] , ['Green', 1, 1], ['Blue', 2, 0]]:
+for color, i, ii in [['Red', 0, 2], ['Green', 1, 1], ['Blue', 2, 0]]:
     imgShow = imgBlank.copy()
     imgShow[:, :, i] = img[:, :, ii]
     plt.subplot(220+i+2)        # 화면 번호 2번부터 R, G, B 순번.
     plt.imshow(imgShow)
     plt.axis('off')  # plt.xticks([]), plt.yticks([])
     plt.title(color)
-    cv.imwrite(color+'.jpg', imgShow, (cv.IMWRITE_JPEG_QUALITY, 97) )   # 품질 97(1~100)로 저장
+    cv.imwrite(color+'.jpg', imgShow, (cv.IMWRITE_JPEG_QUALITY, 97))   # 품질 97(1~100)로 저장
 
 imgShow[:, :, 1] = img[:, :, 1]     # imgShow의 Green에는 OpenCV 영상 img의 1번채널
 imgShow[:, :, 0] = img[:, :, 2]     # imgShow의 Red에는 OpenCV 영상 img의 2번채널. Blue에는 이미 데이터가 들어가 있음.
@@ -157,7 +156,7 @@ plt.title('Original')
 plt.axis('off')                 # plt.xticks([]), plt.yticks([])
 
 # OpenCV로 파일에 저장할 때는 BGR 순서이므로 imgShow 영상을 저장하면 안된다.
-cv.imwrite('rgb.jpg', img, (cv.IMWRITE_JPEG_QUALITY, 97) )   # 읽은 그대로 저장(img). 품질 97(1~100)로 저장
+cv.imwrite('rgb.jpg', img, (cv.IMWRITE_JPEG_QUALITY, 97))   # 읽은 그대로 저장(img). 품질 97(1~100)로 저장
 plt.show()
 exit()
 #=============================================================================================

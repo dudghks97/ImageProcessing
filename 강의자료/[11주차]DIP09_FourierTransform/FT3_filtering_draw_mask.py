@@ -33,7 +33,7 @@ def get_filter_mask(mask_size, d=20, option='circle', sigma=5):
     mask = np.ones((rows, cols), dtype=float)
 
     crow = rows // 2    # center of rows
-    ccol = cols // 2
+    ccol = cols // 2    # center of cols
 
     # 1) 정사각형 마스킹: 중앙부 fft 값을 0에 가까운 값으로 만든다.
     if option == 'square':
