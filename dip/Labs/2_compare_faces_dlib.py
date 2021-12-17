@@ -16,7 +16,7 @@ import dlib
 import numpy as np
 
 # path for dlib model
-model_path = '../../data/dlib_face_recog/'
+model_path = '../data/dlib_face_recog/'
 
 # Load shape predictor, face enconder and face detector using dlib library:
 # model down load: https://github.com/davisking/dlib-models/blob/master/shape_predictor_5_face_landmarks.dat.bz2
@@ -96,7 +96,8 @@ known_encodings = [known_image_1_encoding, known_image_2_encoding,
                    known_image_3_encoding, known_image_4_encoding]
 
 unknown_encoding = face_encodings(unknown_image)[0]         # 여러 사람일 때는 index 번호를 바꿀 수 있다.
-
+# 여러 사람의 경우 인덱싱을 통한 구현 가능
+# 리스트 사용해서 append 하면 해결
 
 # 6) Compare faces:
 # compare_faces() 함수는 unknown_encoding을 known_encodings list에 있는

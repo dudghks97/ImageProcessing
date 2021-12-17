@@ -144,13 +144,13 @@ for im in test_file_list:
     rgb = img[..., ::-1].copy()
     img2 = img.copy()       # 화면 출력용 버퍼
 
-    # 디스플플레이 창을 생성한다.
+    # 디스플레이 창을 생성한다.
     plt.figure(num=im)              # 필수 사항 - 신원 파악한 결과 출력용 창
     win_anlys = im + ' analysis'
     plt.figure(num=win_anlys)       # 추가 가점사항(2)를 위한 창 - 어떤 점수로 인식했는지 1~3위의 사진을 보여준다.
 
     print(f'\n[File: {im}] -----------------------------')
-
+    #
     for i, (unknown_encoding, loc) in enumerate(zip(face_dscrptr_lst, face_locations)):
 
         # 일단 얼굴 검출된 영역의 얼굴을 나중에 보여줄 용도로 임시로 저장한다. 추가사항 (2)의 목적
