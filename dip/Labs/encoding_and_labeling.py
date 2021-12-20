@@ -37,58 +37,62 @@ detector = dlib.get_frontal_face_detector()
 if callable(pose_predictor_5_point):
     print("\nNotice!!: 'pose_predictor_5_point' is a callable object.")
 
-mb_han_lst = ['유재석', '지석진', '김종국', '하하', '송지효', '전소민', '양세찬']
-mb_eng_lst = ['Yoo', 'ji', 'kim', 'ha', 'song', 'jeon', 'yang']
-
 # 멤버별 디렉토리 경로
 Path_list = []
-for i, name in enumerate(mb_eng_lst):
-    Path_list.append(Path + 'members/' + str(i+1) + '.jpg')
+dir_path = Path + 'members/'
 
-# 경로 리스트 출력
-print(Path_list)
-
-"""face_list = []
+# db 생성용 리스트
+face_list = []
 enc_list = []
 label_list = []
 with open(FileName, "wb") as file:
-    for i, path in enumerate(Path_list):
+    for name in os.listdir(dir_path):
+        path = dir_path + name
+        print(path)
         img = cv.imread(path)
-        assert img is not None, f"img={img}: 'No image file....!"
-        rgb = img[:, :, ::-1]
-        face_locations, encodings = face_encodings(rgb)     # get descriptor
-        face_img = rgb[face_locations[0].top():face_locations[0].bottom(), face_locations[0].left():face_locations[0].right(),:]
-        label = mb_eng_lst[i]
+        rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        print('converting is over')
+        # get descriptor & face locations
+        faces, encodings = face_encodings(rgb)
+        face_img = rgb[faces[0].top():faces[0].bottom(), faces[0].left():faces[0].right(), :]
+        label = name[0:name.find('_')]
 
         # list appending
         face_list.append(face_img)
         enc_list.append(encodings[0])   # 0번째 원소만 추가
         label_list.append(label)
-    # data to file
+    # dump data to file
     data = [face_list, enc_list, label_list]
-    pickle.dump(data, file)"""
+    pickle.dump(data, file)
 
 with open(FileName, "rb") as file:
     all_member_face, all_member_encodings1d_lst, all_member1d_label_lst = pickle.load(file)
+
 print(all_member1d_label_lst)
 print(all_member_encodings1d_lst)
 
 plt.figure()
+
 for i, img in enumerate(all_member_face):
-    plt.subplot(3,3,i+1)
-    #img = np.array(img)
+    plt.subplot(10, 7, i+1)
+    plt.axis('off')
+    img = np.array(img)
     plt.imshow(img)
 
 print('=================================')
+print(len(all_member_face))
 print(type(all_member_face))
 print(type(all_member_face[0]))
 print(all_member_face[0].shape)
 print('=================================')
+print(len(all_member_encodings1d_lst))
 print(type(all_member_encodings1d_lst))
 print(type(all_member_encodings1d_lst[0]))
 print(all_member_encodings1d_lst[0].shape)
 print('=================================')
+print(len(all_member1d_label_lst))
 print(type(all_member1d_label_lst))
 print(type(all_member1d_label_lst[0]))
 
 plt.show()
+exit(0)
