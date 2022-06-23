@@ -70,9 +70,7 @@ with open(face_db, "rb") as file:
     print('successfully loaded!')
 
 # threshold 값 지정
-threshold = 0.6
 threshold = 0.4
-threshold = 0.45
 print("threshold=", threshold)
 
 # test img load & compare
